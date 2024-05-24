@@ -3,7 +3,7 @@
 // ============================================================================
 
 #include "bfs.h"
-
+#hi
 // ============================================================================
 // Allocate a free disk block for the file whose Inode number is 'inum' and
 // assign it to FBN 'fbn' in the file's Inode.  On success, return the DBN
@@ -24,7 +24,7 @@ i32 bfsAllocBlock(i32 inum, i32 fbn) {
 
   i8 buf8[BYTESPERBLOCK] = {0};           // 1-block buffer
   bioRead(DBNINODES, buf8);
- 
+
   Inode* pinodes = (Inode*)buf8;          // array of Inodes
   Inode* pinode  = &pinodes[inum];        // target Inode
 
@@ -127,7 +127,7 @@ i32 bfsFbnToDbn(i32 inum, i32 fbn) {
   if (fbn  > MAXFBN)  FATAL(EBADFBN);
 
   Inode inode;
-  
+
   bfsReadInode(inum, &inode);
 
   if (fbn < NUMDIRECT) {            // in direct[] array?
@@ -160,8 +160,8 @@ i32 bfsFbnToDbn(i32 inum, i32 fbn) {
 // ============================================================================
 // Convert FileDescriptor (user-visible) to Inum (internal)
 // ============================================================================
-i32 bfsFdToInum(i32 fd) { 
-  i32 inum = fd - INUMTOFD; 
+i32 bfsFdToInum(i32 fd) {
+  i32 inum = fd - INUMTOFD;
   if (inum < 0) FATAL(EBADINUM);
   return inum;
 }
@@ -177,7 +177,7 @@ i32 bfsFindOFTE(i32 inum) {
   for (int i = 0; i < NUMOFTENTRIES; ++i) {
     if (g_oft[i].inum == inum) return i;
   }
-  
+
   // Not found, so look for an empty OFTE
 
   for (int i = 0; i < NUMOFTENTRIES; ++i) {
@@ -427,7 +427,7 @@ i32 bfsSetSize(i32 inum, i32 size) {
 
   Inode inode;
   bfsReadInode(inum, &inode);
-  
+
   inode.size = size;
   bfsWriteInode(inum, &inode);
   return 0;
